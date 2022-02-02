@@ -1,18 +1,22 @@
 import {
-  ValidatedEventAPIGatewayProxyEvent,
   formatJSONResponse,
+  ValidatedEventAPIGatewayProxyEventProfile,
 } from "@libs/api-gateway";
-import { middyfy } from "@libs/lambda";
+import middy from "@middy/core";
+import jsonBodyParser from "@middy/http-json-body-parser";
+import { exampleMiddleware } from "src/middlewares/example";
 
 import schema from "./schema";
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (
+const hello: ValidatedEventAPIGatewayProxyEventProfile<typeof schema> = async (
   event
 ) => {
   return formatJSONResponse({
-    message: `Hello ${event.body.name}, welcome to the exciting Serverless world!`,
+    message: `Hello ${event.profileName}, welcome to the exciting Serverless world!`,
     event,
   });
 };
 
-export const main = middyfy(hello);
+export const main = middy(hello)
+  .use(jsonBodyParser())
+  .before(exampleMiddleware);
