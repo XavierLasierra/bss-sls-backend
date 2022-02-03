@@ -2,9 +2,9 @@ import {
   formatJSONResponse,
   ValidatedEventAPIGatewayProxyEventProfile,
 } from "@libs/api-gateway";
-import middy from "@middy/core";
-import jsonBodyParser from "@middy/http-json-body-parser";
-import { exampleMiddleware } from "src/middlewares/example";
+import { middyfy } from "@libs/lambda";
+import { errorHandling } from "src/middlewares/errorHandling";
+import { authMiddleware } from "src/middlewares/example";
 
 import schema from "./schema";
 
@@ -17,6 +17,6 @@ const hello: ValidatedEventAPIGatewayProxyEventProfile<typeof schema> = async (
   });
 };
 
-export const main = middy(hello)
-  .use(jsonBodyParser())
-  .before(exampleMiddleware);
+export const main = middyfy(hello)
+  .before(authMiddleware)
+  .onError(errorHandling);
