@@ -1,7 +1,5 @@
 import type { AWS } from "@serverless/typescript";
 
-import hello from "@functions/hello";
-
 const serverlessConfiguration: AWS = {
   service: "serverless-boilerplate",
   frameworkVersion: "3",
@@ -20,10 +18,24 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
-      DEFAULT_NAME: process.env.DEFAULT_NAME,
+      DB_CONNECTION_STRING: process.env.DB_CONNECTION_STRING,
+      DB_SCHEMA: process.env.DB_SCHEMA,
     },
   },
-  functions: { hello },
+  functions: {
+    jobCategoryGetList: {
+      handler: `./src/functions/jobCategory/handler.list`,
+      events: [
+        {
+          http: {
+            method: "get",
+            path: "category",
+          },
+        },
+      ],
+      memorySize: 128,
+    },
+  },
   package: { individually: true },
   custom: {
     esbuild: {
