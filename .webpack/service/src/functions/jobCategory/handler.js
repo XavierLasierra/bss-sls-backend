@@ -30623,6 +30623,7 @@ const formatJSONResponse = (response, statusCode) => {
     return {
         statusCode: statusCode || 200,
         body: JSON.stringify(response),
+        headers: { "Content-Type": "application/json" },
     };
 };
 
