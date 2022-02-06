@@ -1,9 +1,9 @@
+import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import { errorHandling } from "src/middlewares/errorHandling";
 import { listAsync } from "./controller";
-import { formatJSONResponse } from "@libs/api-gateway";
 
-export async function listHandler(event): Promise<Record<string, unknown>> {
+export async function listHandler(): Promise<Record<string, unknown>> {
   const jobCategories = await listAsync();
   return formatJSONResponse(jobCategories);
 }

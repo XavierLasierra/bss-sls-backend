@@ -1,5 +1,5 @@
 export const jobCategory = (sequelize, type) => {
-  const jobCategory = sequelize.define(
+  return sequelize.define(
     "sw_job_category",
     {
       id: {
@@ -22,6 +22,4 @@ export const jobCategory = (sequelize, type) => {
       underscored: true,
     }
   );
-
-  return jobCategory;
 };
