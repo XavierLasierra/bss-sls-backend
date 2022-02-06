@@ -1,4 +1,4 @@
-import { models } from "src/services/db";
+import { models } from "@libs/db";
 
 export const listAsync = async (): Promise<any> => {
   try {
