@@ -1,42 +1,9 @@
-import { LimitOffsetParams, SortParam } from "../models/api";
+import { Order } from "sequelize/dist";
 
-export function parseSortParameters(sortParamStr: string): SortParam[] {
-  const result: SortParam[] = [];
-
+export function parseSortParameters(sortParamStr: string): Order {
   const sortParams = sortParamStr.split(",");
-  for (const sortParam of sortParams) {
-    const parts = sortParam.split(" ");
-    result.push({
-      name: parts[0],
-      direction: parts[1],
-    });
-  }
-
-  return result;
-}
-
-export function buildOrderBySqlString(
-  sortParams: SortParam[],
-  sortPropertyMap: { [key: string]: string }
-): string {
-  if (sortParams.length === 0) return "";
-
-  const sortParts: string[] = [];
-  for (const sortParam of sortParams) {
-    const mappedName = sortPropertyMap[sortParam.name];
-    if (mappedName === undefined) {
-      continue;
-    }
-
-    sortParts.push(`${mappedName} ${sortParam.direction}`);
-  }
-
-  if (sortParts.length === 0) return "";
-  return `ORDER BY ${sortParts.join(",")}`;
-}
-
-export function buildOffsetLimitSqlString(
-  limitOffset: LimitOffsetParams
-): string {
-  return `OFFSET ${limitOffset.offset} LIMIT ${limitOffset.limit}`;
+  return sortParams.map((sortParam) => {
+    const [name, direction] = sortParam.split(" ");
+    return [name, direction.toUpperCase()];
+  });
 }

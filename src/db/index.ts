@@ -1,7 +1,8 @@
-import { Sequelize } from "sequelize";
+import { DataTypes, Sequelize } from "sequelize";
 import pg from "pg";
 
 import * as entities from "./models";
+import { IJobCategoryModel } from "./models/jobCategory";
 
 const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
   quoteIdentifiers: false,
@@ -9,7 +10,11 @@ const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
   dialectModule: pg,
 });
 
-const JobCategoryEntity = entities.jobCategory(sequelize, Sequelize);
+const JobCategoryEntity = entities.jobCategory(sequelize, DataTypes);
+
+export interface IModels {
+  JobCategoryEntity: IJobCategoryModel;
+}
 
 const Models = {
   JobCategoryEntity,
@@ -29,7 +34,7 @@ export const sequelizeConnect = async (): Promise<Sequelize> => {
   return sequelize;
 };
 
-export const models = async (): Promise<any> => {
+export const models = async (): Promise<IModels> => {
   if (!connection.isConnected) {
     await sequelize.authenticate();
     connection.isConnected = true;

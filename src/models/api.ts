@@ -14,16 +14,6 @@ export interface PaginationResponse {
   total: number;
 }
 
-export interface LimitOffsetParams {
-  offset: number;
-  limit: number;
-}
-
-export interface APIMethodResult<T> {
-  status: number;
-  data: T;
-}
-
 export enum ContentType {
   TEXT_PLAIN = "text/plain",
   APPLICATION_JSON = "application/json",

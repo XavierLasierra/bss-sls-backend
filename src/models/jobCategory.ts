@@ -1,3 +1,4 @@
+import { IJobCategoryEntity } from "src/db/models/jobCategory";
 import { PaginationResponse } from "./api";
 
 export interface SWJobCategory {
@@ -10,19 +11,7 @@ export interface SWJobCategoryFilterParams {
   name?: string;
 }
 
-export interface SWJobCategoryListResult {
-  list: SWJobCategory[];
-  total: number;
-}
-
 export interface SWJobCategoryListResponse {
-  data: SWJobCategory[];
+  data: IJobCategoryEntity[];
   pagination: PaginationResponse;
-}
-
-export interface SWJobCategoryDb {
-  id: number;
-  name: string;
-  imageUrl: string;
-  total: number;
 }

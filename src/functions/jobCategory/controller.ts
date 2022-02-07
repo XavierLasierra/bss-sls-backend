@@ -1,7 +1,19 @@
+import { FormattedQueryParameters } from "@libs/api-gateway";
 import { models } from "src/db";
-import { SWJobCategoryDb } from "src/models/jobCategory";
+import { SWJobCategoryListResponse } from "src/models/jobCategory";
 
-export const listAsync = async (): Promise<SWJobCategoryDb[]> => {
+export const listAsync = async (
+  query: FormattedQueryParameters
+): Promise<SWJobCategoryListResponse> => {
   const { JobCategoryEntity } = await models();
-  return JobCategoryEntity.findAll();
+  const { count, rows } = await JobCategoryEntity.findAndCountAll(query);
+
+  return {
+    data: rows,
+    pagination: {
+      page: query.offset / query.limit || 1,
+      total: count,
+      size: query.limit,
+    },
+  };
 };
