@@ -1,17 +1,22 @@
-export const jobCategory = (sequelize, type) => {
+import { Model, ModelStatic, Sequelize } from "sequelize/dist";
+
+export const jobCategory = (
+  sequelize: Sequelize,
+  DataTypes
+): ModelStatic<Model<any, any>> => {
   return sequelize.define(
     "sw_job_category",
     {
       id: {
-        type: type.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
       },
       imageUrl: {
-        type: type.STRING,
+        type: DataTypes.STRING,
       },
       name: {
-        type: type.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

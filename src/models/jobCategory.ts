@@ -19,3 +19,10 @@ export interface SWJobCategoryListResponse {
   data: SWJobCategory[];
   pagination: PaginationResponse;
 }
+
+export interface SWJobCategoryDb {
+  id: number;
+  name: string;
+  imageUrl: string;
+  total: number;
+}
