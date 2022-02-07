@@ -1,6 +1,12 @@
-import { formatJSONResponse } from "@libs/api-gateway";
+import {
+  formatJSONResponse,
+  SwockAPIGatewayProxyRequest,
+  SwockAPIGatewayProxyResult,
+} from "@libs/api-gateway";
 
-export const errorHandling = ({ error }) => {
+export const errorHandling = ({
+  error,
+}: SwockAPIGatewayProxyRequest): SwockAPIGatewayProxyResult => {
   const response = error?.message || "Internal server error";
   const statusCode = error?.code || 500;
   return formatJSONResponse(response, statusCode);

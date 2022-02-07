@@ -4,6 +4,8 @@ module.exports = {
     node: true,
   },
   extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "@serverless/eslint-config/node",
     "prettier",
@@ -13,7 +15,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint", "@typescript-eslint/no-shadow"],
+  plugins: ["@typescript-eslint"],
   rules: {
     "import/extensions": [
       "error",
@@ -25,6 +27,10 @@ module.exports = {
     ],
     "import/no-unresolved": [0],
     "import/prefer-default-export": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
   },
   settings: {
     "import/resolver": {

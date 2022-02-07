@@ -1,29 +1,42 @@
+import middy from "@middy/core";
 import type {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
-  Handler,
+  Context,
 } from "aws-lambda";
-import type { FromSchema } from "json-schema-to-ts";
+import { Order } from "sequelize/dist";
+import { ContentType } from "src/models/api";
+import CustomError from "src/utils/CustomError";
 
-type ValidatedAPIGatewayProxyEvent<S> = Omit<APIGatewayProxyEvent, "body"> & {
-  body: FromSchema<S>;
+export interface FormattedQueryParameters {
+  order?: Order;
+  limit: number;
+  offset: number;
+  where?: {
+    [x: string]: any;
+  };
+}
+
+export type SwockAPIGatewayProxyEvent = APIGatewayProxyEvent & {
+  formatedQueryParameters: FormattedQueryParameters;
 };
-export type ValidatedEventAPIGatewayProxyEvent<S> = Handler<
-  ValidatedAPIGatewayProxyEvent<S>,
-  APIGatewayProxyResult
->;
 
-export type ValidatedEventAPIGatewayProxyEventProfile<S> = Handler<
-  ValidatedAPIGatewayProxyEvent<S> & { profileName: string },
-  APIGatewayProxyResult
+export type SwockAPIGatewayProxyResult = APIGatewayProxyResult;
+
+export type SwockAPIGatewayProxyRequest = middy.Request<
+  SwockAPIGatewayProxyEvent,
+  SwockAPIGatewayProxyResult,
+  CustomError,
+  Context
 >;
 
 export const formatJSONResponse = (
-  response: Record<string, unknown>,
+  response: any,
   statusCode?: number
-) => {
+): APIGatewayProxyResult => {
   return {
     statusCode: statusCode || 200,
     body: JSON.stringify(response),
+    headers: { "Content-Type": ContentType.APPLICATION_JSON },
   };
 };
