@@ -18,6 +18,13 @@ functions:
           method: GET
           path: /category
     memorySize: 128
+  jobGetList:
+    handler: ./src/functions/job/handler.list
+    events:
+      - httpApi:
+          method: GET
+          path: /job
+    memorySize: 128
 package:
   individually: true
 custom:

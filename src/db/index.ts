@@ -1,24 +1,14 @@
-import { DataTypes, Sequelize } from "sequelize";
+import { Sequelize } from "sequelize";
 import pg from "pg";
 
-import * as entities from "./models";
-import { IJobCategoryModel } from "./models/jobCategory";
+import { IModels, buildModels } from "./models";
 
 const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
-  quoteIdentifiers: false,
   schema: process.env.DB_SCHEMA,
   dialectModule: pg,
 });
 
-const JobCategoryEntity = entities.jobCategory(sequelize, DataTypes);
-
-export interface IModels {
-  JobCategoryEntity: IJobCategoryModel;
-}
-
-const Models = {
-  JobCategoryEntity,
-};
+const Models: IModels = buildModels(sequelize);
 
 const connection = {
   isConnected: false,

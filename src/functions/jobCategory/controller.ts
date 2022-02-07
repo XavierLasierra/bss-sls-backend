@@ -5,8 +5,8 @@ import { SWJobCategoryListResponse } from "src/models/jobCategory";
 export const listAsync = async (
   query: FormattedQueryParameters
 ): Promise<SWJobCategoryListResponse> => {
-  const { JobCategoryEntity } = await models();
-  const { count, rows } = await JobCategoryEntity.findAndCountAll(query);
+  const { JobCategoryModel } = await models();
+  const { count, rows } = await JobCategoryModel.findAndCountAll(query);
 
   return {
     data: rows,

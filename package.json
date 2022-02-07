@@ -29,6 +29,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "json-schema-to-ts": "^1.5.0",
+    "sequelize-auto": "^0.8.8",
     "serverless": "^3.0.0",
     "serverless-bundle": "^5.2.0",
     "serverless-dotenv-plugin": "^3.12.2",

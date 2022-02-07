@@ -4,23 +4,20 @@ import { SWJobCategory } from "src/models/jobCategory";
 export type IJobCategoryModel = ModelStatic<IJobCategoryEntity>;
 export type IJobCategoryEntity = Model<SWJobCategory>;
 
-export const jobCategory = (
-  sequelize: Sequelize,
-  types: typeof DataTypes
-): IJobCategoryModel => {
+export const jobCategory = (sequelize: Sequelize): IJobCategoryModel => {
   return sequelize.define(
     "sw_job_category",
     {
       id: {
-        type: types.INTEGER,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
       },
       imageUrl: {
-        type: types.STRING,
+        type: DataTypes.STRING,
       },
       name: {
-        type: types.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },
