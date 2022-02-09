@@ -3,40 +3,33 @@ import type {
   APIGatewayProxyEvent,
   APIGatewayProxyResult,
   Context,
+  Handler,
 } from "aws-lambda";
-import { Order } from "sequelize/dist";
-import { ContentType } from "src/models/api";
 import CustomError from "src/utils/CustomError";
 
-export interface FormattedQueryParameters {
-  order?: Order;
-  limit: number;
-  offset: number;
-  where?: {
-    [x: string]: any;
-  };
-}
+export type CustomAPIGatewayProxyHandler = Handler<
+  CustomAPIGatewayProxyEvent,
+  CustomAPIGatewayProxyResult
+>;
 
-export type SwockAPIGatewayProxyEvent = APIGatewayProxyEvent & {
-  formatedQueryParameters: FormattedQueryParameters;
-};
+export type CustomAPIGatewayProxyEvent = APIGatewayProxyEvent;
 
-export type SwockAPIGatewayProxyResult = APIGatewayProxyResult;
+export type CustomAPIGatewayProxyResult = APIGatewayProxyResult;
 
-export type SwockAPIGatewayProxyRequest = middy.Request<
-  SwockAPIGatewayProxyEvent,
-  SwockAPIGatewayProxyResult,
+export type CustomAPIGatewayProxyRequest = middy.Request<
+  CustomAPIGatewayProxyEvent,
+  CustomAPIGatewayProxyResult,
   CustomError,
   Context
 >;
 
-export const formatJSONResponse = (
-  response: any,
+export const formatJSONResponse = <T>(
+  response: T,
   statusCode?: number
 ): APIGatewayProxyResult => {
   return {
     statusCode: statusCode || 200,
     body: JSON.stringify(response),
-    headers: { "Content-Type": ContentType.APPLICATION_JSON },
+    headers: { "Content-Type": "application/json" },
   };
 };

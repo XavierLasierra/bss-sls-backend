@@ -11,20 +11,14 @@ provider:
     minimumCompressionSize: 1024
     shouldStartNameWithService: true
 functions:
-  jobCategoryGetList:
-    handler: ./src/functions/jobCategory/handler.list
+  hello:
+    handler: ./src/functions/hello/handler.list
     events:
       - httpApi:
           method: GET
-          path: /category
+          path: /hello
     memorySize: 128
-  jobGetList:
-    handler: ./src/functions/job/handler.list
-    events:
-      - httpApi:
-          method: GET
-          path: /job
-    memorySize: 128
+
 package:
   individually: true
 custom:
