@@ -1,11 +1,14 @@
 import type { AWS } from "@serverless/typescript";
 
 import { functions } from "./src/functions";
+import { cognitoResources } from "./src/config/cognitoResources";
 
 const serverlessConfiguration: AWS = {
-  service: "serverless-boilerplate",
+  service: "bss",
   frameworkVersion: "3",
   useDotenv: true,
+  org: "xavxav",
+  app: "bss",
 
   plugins: ["serverless-bundle", "serverless-offline"],
 
@@ -38,6 +41,21 @@ const serverlessConfiguration: AWS = {
     "serverless-offline": {
       noPrependStageInUrl: true,
       noAuth: true,
+    },
+  },
+
+  resources: {
+    Resources: {
+      ...cognitoResources,
+    },
+  },
+  outputs: {
+    UserPoolId: { Value: { Ref: "CognitoUserPoolUserPool" } },
+    UserPoolClientId: { Value: { Ref: "CognitoUserPoolClient" } },
+    IdentityPoolId: { Value: { Ref: "CognitoIdentityPool" } },
+    CognitoAuthRole: {
+      Value: { Ref: "CognitoAuthRole" },
+      Export: { Name: "CognitoAuthRole-${self:provider.stage}" },
     },
   },
 };
