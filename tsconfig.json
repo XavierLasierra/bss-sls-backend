@@ -1,15 +1,6 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@middlewares/*": ["src/middlewares/*"],
-      "@db/*": ["src/db/*"],
-      "@functions/*": ["src/functions/*"],
-      "@models/*": ["src/models/*"],
-      "@schemas/*": ["src/schemas/*"],
-      "@utils/*": ["src/utils/*"]
-    },
     "lib": ["ESNext"],
     "moduleResolution": "node",
     "noUnusedLocals": true,
